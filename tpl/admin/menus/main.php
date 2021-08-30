@@ -7,40 +7,7 @@
         border-radius: 5px !important;
     }
 </style>
-<script>
-    var portpostbtn = document.getElementById("portpostbtn");
-    var portpostcontainer = document.getElementById("portpostcontainer");
 
-    if (portpostbtn) {
-        portpostbtn.addEventListener("click", function () {
-            var ourRequest = new XMLHttpRequest();
-            ourRequest = new XMLHttpRequest();
-            ourRequest.open('GET', 'https://qom.iastjd.ac.ir/wp-json/wp/v2/posts?categories=9');
-            ourRequest.onload = function () {
-                if (ourRequest.status >= 200 && ourRequest.status < 400) {
-                    var data = JSON.parse(ourRequest.responseText);
-                    createHTML(data);
-                } else {
-                    console.log("RETURENED ERROR!");
-                }
-            };
-            OurRequest.onerror = function () {
-                console.log("connection error");
-            };
-
-            ourRequest.send();
-        });
-    }
-    function CreateHTML(postData){
-        var ourHTMLString = '';
-        for(i = 0; i < postsData.length;i++)
-        {
-            ourHTMLString += '<h2>' + postsData[i].title.rendered + '</h2>';
-            ourHTMLString += postData[i].content.rendered;
-        }
-        portpostcontainer.innerHTML = ourHTMLString;
-    }
-</script>
 <div class="wrap">
     <h1>
         لیست اطلاعات
@@ -82,6 +49,34 @@
         <?php endforeach; ?>
         </tbody>
     </table>
+    <?php
+$response = wp_remote_get('https://qom.iastjd.ac.ir/wp-json/wp/v2/posts');
+$posts = json_decode(wp_remote_retrieve_body($response));
+echo '<div class="latest-posts">';
+foreach ( $posts as $post ){
+    echo " '<li><h2>'.$post->title->rendered.'</h2>'.$post->content->rendered.'</h2></li>' ";
+}
+    echo '</div>';
+?>
+    <script>
+        const url = 'https://qom.iastjd.ac.ir/wp-json/wp/v2/posts';
+        const postsContainer = document.querySelector('.latest-posts');
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                data.map(post => {
+                    const innerContent =
+                        `
+            <li>
+            <h2>${post.title.rendered}</h2>
+            <h2>${post.content.rendered}</h2>
+            </li> `
+                    postsContainer.innerHTML  += innerContent;
+                })
+            });
+
+    </script>
+
     <div id="portpostcontainer">
 
     </div>
