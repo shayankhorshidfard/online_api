@@ -49,33 +49,21 @@
         <?php endforeach; ?>
         </tbody>
     </table>
-    <?php
-$response = wp_remote_get('https://qom.iastjd.ac.ir/wp-json/wp/v2/posts');
-$posts = json_decode(wp_remote_retrieve_body($response));
-echo '<div class="latest-posts">';
-foreach ( $posts as $post ){
-    echo " '<li><h2>'.$post->title->rendered.'</h2>'.$post->content->rendered.'</h2></li>' ";
-}
-    echo '</div>';
-?>
-    <script>
-        const url = 'https://qom.iastjd.ac.ir/wp-json/wp/v2/posts';
-        const postsContainer = document.querySelector('.latest-posts');
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                data.map(post => {
-                    const innerContent =
-                        `
-            <li>
-            <h2>${post.title.rendered}</h2>
-            <h2>${post.content.rendered}</h2>
-            </li> `
-                    postsContainer.innerHTML  += innerContent;
-                })
-            });
 
-    </script>
+    <?php
+
+    $response = wp_remote_get( 'https://qom.iastjd.ac.ir/wp-json/wp/v2/posts' );
+    $posts = json_decode( wp_remote_retrieve_body( $response ) );
+
+    echo '<div class="latest-posts">';
+    foreach( $posts as $post ) {
+        echo '<li><h2>'.$post->title->rendered.'</h2>'.$post->excerpt->rendered.'<a href="' . $post->link . '">Read More</a></li>';
+    }
+    echo '</div>';
+
+
+    ?>
+
 
     <div id="portpostcontainer">
 

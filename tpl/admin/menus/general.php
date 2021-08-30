@@ -3,31 +3,18 @@
 
 </div>
 
-<style>
-    .btn{
-        background-color: green;border-radius: 5px;color: white;border: none;padding: 5px;font-size: 15px;
-        transition: all ease 700ms;
+<div class="latest-posts">
+    <?php
+
+    $response = wp_remote_get( 'https://qom.iastjd.ac.ir/wp-json/wp/v2/posts' );
+    $posts = json_decode( wp_remote_retrieve_body( $response ) );
+
+    echo '<div class="latest-posts">';
+    foreach( $posts as $post ) {
+        echo '<li><h2>'.$post->title->rendered.'</h2>'.$post->excerpt->rendered.'<a href="' . $post->link . '">Read More</a></li>';
     }
-    .btn:hover{
-        background-color: white;
-        color: green;
-        transition: all ease 700ms;
-    }
-    label{
-        font-size: 15px;
-    }
-</style>
-<div class="wrap">
-<!--    <header>تنظیمات پلاگین</header>-->
-<!--    <form action="" method="post">-->
-<!--        <label for="is_plugin_active">-->
-<!---->
-<!--            <input name="is_plugin_active" id="mycheckbox" type="checkbox"-->
-<!--                --><?php //echo  isset($current_plugin_status) && intval($current_plugin_status) > 0 ? 'checked': ''; ?>
-<!--            >-->
-<!--            فعال بودن پلاگین-->
-<!--        </label>-->
-<!--        <button class="btn" type="submit" name="savesettings" >ذخیره سازی</button>-->
-<!---->
-<!--    </form>-->
+    echo '</div>';
+
+
+    ?>
 </div>
