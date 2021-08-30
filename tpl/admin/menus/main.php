@@ -57,9 +57,9 @@
 
     echo '<div class="latest-posts">';
     foreach( $posts as $post ) {
-        echo '<li><h2>'.$post->title->rendered.'</h2>'.$post->excerpt->rendered.'<a href="' . $post->link . '">
-                بیشتر بخوانید
-</a></li>';
+        echo '<li><h2>'.$post->title->rendered.'</h2>'.$post->content->rendered.'</h2></li>';
+
+
     }
     echo '</div>';
 
