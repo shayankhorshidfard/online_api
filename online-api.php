@@ -16,7 +16,10 @@ define('WP_APIS_TPL', WP_APIS_DIR . '/tpl/'); //name and cap
 
 register_activation_hook(__FILE__, 'simple_plugin_activation');
 register_deactivation_hook(__FILE__, 'simple_plugin_deactivation');
+function learningWordPress_resources(){
+    wp_enqueue_script('main_js' , get_template_directory_uri() . '/inc/main.js');
 
+}
 function simple_plugin_activation()
 {
 
