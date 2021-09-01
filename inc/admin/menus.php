@@ -16,7 +16,7 @@ function wp_apis_register_menus()
 {
     add_menu_page(
         'پلاگین API',
-        'اطلاعات',
+        'مدیریت اطلاعات',
         'manage_options',
         'wp_apis_admin',
         'wp_apis_main_menu_handler'
@@ -32,6 +32,7 @@ function wp_apis_register_menus()
         'wp_apis_general',
         'wp_apis_general_page'
     );
+
 }
 
 //end function wp_apis_register_menus
@@ -52,11 +53,14 @@ function wp_apis_main_menu_handler()
             $wpdb->insert($wpdb->prefix . 'apinews', [
                 'name_office' => $_POST['name_office'],
                 'api_address' => $_POST['api_address'],
+                'categories' => $_POST['categories'],
             ]);
         }
         include WP_APIS_TPL . 'admin/menus/add.php';
     } else {
         $samples = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}apinews");
+        $apipost = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}apipost");
+
         include WP_APIS_TPL . 'admin/menus/main.php';
     }
 
@@ -81,36 +85,32 @@ function wp_apis_general_page()
 function wp_apis_users_page()
 {
     global $wpdb;
-    if (isset($_GET['action']) && $_GET['action'] = 'edit')
+    if (isset($_GET['action']) && $_GET['action'] == 'edit')
     {
         $userID = intval($_GET['id']);
-        if (isset($_POST['saveUserInfo'])) {
-            $mobile = $_POST['name_office'];
-            $wallet = $_POST['api_address'];
-
-            if (!empty($mobile)) {
-                update_user_meta($userID,'name_office',$mobile);
-            }
-            if(!empty($wallet))
+        if(isset($_POST['saveOfficeInfo']))
+        {
+            $office = $_POST['name_office'];
+            $apiadd = $_POST['api_adress'];
+            if(!empty($office))
             {
-                update_user_meta($userID,'api_address',$wallet);
+                update_user_meta($userID,'name_office',$office);
             }
+            if(!empty($apiadd))
+            {
+                update_user_meta($userID,'api_adress',$apiadd);
+            }
+
         }
 
 
-        $mobile = get_user_meta($userID, 'name_office', true);
-        $wallet = get_user_meta($userID, 'api_address', true);
-        include WP_APIS_TPL . 'admin/menus/users/edit.php';
+        $office = get_user_meta($userID,'name_office',true);
+        $apiadd = get_user_meta($userID,'api_adress',true);
+        include WP_APIS_TPL . 'admin/menus/edit.php';
         return;
 
     }
 
-    if (isset($_GET['action']) && $_GET['action'] == 'removeMobileAndWallet')
-    {
-        $userID = intval($_GET['id']);
-        delete_user_meta($userID,'name_office');
-        delete_user_meta($userID,'api_address');
-    }
-    $users = $wpdb->get_results("SELECT id,name_office,api_address FROM {$wpdb->apinews}");
-    include WP_APIS_TPL . 'admin/menus/users/users.php';
+
 }
+//new code
