@@ -50,7 +50,7 @@
                     <button class="button" type="submit" id="portpostbtn" name="getNews" style="width: 120px;border: 2px solid green;color: green">
                         دریافت اطلاعات
                     </button>
-                        <button class="button" type="submit" id="portpostbtn" name="savesetting" style="width: 120px;border: 2px solid #4579c3;color: #4579c3">
+                        <button <?php if(isset($enable)){ echo 'disable'; } ?> class="button" type="submit" id="portpostbtn" name="savesetting" style="width: 120px;border: 2px solid #4579c3;color: #4579c3">
                             ثبت اطلاعات
                         </button>
                     </form>
@@ -72,12 +72,17 @@
     echo '<div class="latest-posts">';
     if($posts !=null)
     {
-        global $wpdb;
+        global $wpdb,$enable;
+        $enable= 1;
         foreach( $posts as $post ) {
             $title = $post->title->rendered;
-            $apipost = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}posts");
+            $id_metapost = $post->id;
 
-            if(is_array($apipost))
+            $apipost = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}postmeta where post_id=$id_metapost");
+
+ //var_dump($apipost);
+
+            if(count($apipost)==0)
             {
 
                 $wpdb->insert($wpdb->prefix . 'posts', [
@@ -90,6 +95,7 @@
                     'meta_key' => $post->guid->rendered,
                 ]);
 
+                $enable = 0;
             }
 
 
