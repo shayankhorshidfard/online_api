@@ -2,12 +2,12 @@
 /*
 Plugin Name: ONLINE-API
 Plugin URI: http://wordpress.org/plugins/hello-dolly/
-Description: Im working on Plugin for get api from other website
+Description:   پلاگین اطلاعات رو دریافت میکند و ذخیره میکنه
 Author: shayan khorshidfard
 Text Domain: Online-api
 Domain Path:/languages/
 Version: 1.0.0
-Author URI: git@github.com:madavemger/online-api.git
+Author URI: https://github.com/shayankhorshidfard/online_api
 */
 define('WP_APIS_DIR', plugin_dir_path(__FILE__)); //name and cap
 define('WP_APIS_URL', plugin_dir_url(__FILE__)); //name and cap
@@ -35,5 +35,5 @@ if (is_admin())
     include WP_APIS_INC. 'admin/menus.php';
     include WP_APIS_INC. 'admin/mtaboxes.php';
 }
-include WP_APIS_INC. 'ajax.php';
+
 
