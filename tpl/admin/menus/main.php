@@ -38,9 +38,9 @@
                     <a class="button" style="width: 120px;text-align: center;margin-bottom: 5px"
                        href="<?php echo add_query_arg(['action' => 'delete', 'item' => $sample->id]) ?>">حذف کردن</a>
 
-                    <a  class="button" href="<?php echo add_query_arg(['action' => 'edit','id' => $sample->id]) ?>" style="display: none;width: 120px;border: 2px solid #e1ba00;color: #e1ba00">
-                        ویرایش
-                    </a>
+<!--                    <a  class="button" href="--><?php //echo add_query_arg(['action' => 'edit','id' => $sample->id]) ?><!--" style="display: none;width: 120px;border: 2px solid #e1ba00;color: #e1ba00">-->
+<!--                        ویرایش-->
+<!--                    </a>-->
                     <?php
                     the_content();
                     ?>
