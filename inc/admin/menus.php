@@ -24,14 +24,14 @@ function wp_apis_register_menus()
 
     );
 
-    add_submenu_page(
-        'wp_apis_admin',
-        'تنظیمات',
-        'تنظیمات',
-        'manage_options',
-        'wp_apis_general',
-        'wp_apis_general_page'
-    );
+//    add_submenu_page(
+//        'wp_apis_admin',
+//        'تنظیمات',
+//        'تنظیمات',
+//        'manage_options',
+//        'wp_apis_general',
+//        'wp_apis_general_page'
+//    );
 
 }
 
